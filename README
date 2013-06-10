@@ -1,0 +1,41 @@
+This is a collection of usefull UDFs that we use at the Leibniz Institute
+for Astrophysics in Potsdam. 
+
+These are:
+
+- UDF for angular distance using the Vincenty formula
+- UDF for up to 10-dim hilbert curve key generation
+- UDF for distributed STDDEV calculation
+- UDF for doing nothing for a given number of seconds (sleep)
+- UDF for strrpos implementation
+
+
+To install
+----------
+
+1) Download the mysql source corresponding to your installed
+   version. Building mysql from scratch is recommended.
+
+   Note: ONLY MYSQL VERSION 5.5 AND ABOVE ARE CURRENTLY 
+   	 SUPPORTED
+
+2) edit CMakeList.txt accordingly to point to the directory 
+   where mysql is installed.
+
+3) edit CMakeList.txt accordingly to point to the directory
+   of the mysql sources
+
+4) mkdir build
+   cd build
+
+5) cmake ..
+
+6) make
+
+7) make install
+
+8) log into mysql server as root and execute the commands in 
+   install_paquUDF.sql
+
+   This will setup the neccessary tables, install the plugin
+   and create all the UDFs needed to administer the queue.
