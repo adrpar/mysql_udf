@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.6)
-project (paqu_UDF)
+project (mysql_aip_UDF)
 ###########################################################
 #### uncomment this, if you want to specify own mysql path
 ###########################################################
@@ -38,12 +38,12 @@ include_directories ("${PROJECT_SOURCE_DIR}" "${MYSQL_SOURCES_PATH}/include" "${
 
 file(GLOB FILES_SRC "${PROJECT_SOURCE_DIR}/src/*.h" "${PROJECT_SOURCE_DIR}/src/*.cpp" "${PROJECT_SOURCE_DIR}/src/*.cc" "${PROJECT_SOURCE_DIR}/src/libhilbert/*.c")
 
-add_library (paqu_UDF ${FILES_SRC})
+add_library (mysql_aip_UDF ${FILES_SRC})
 
 #get rid of the lib infront of the target file name
-set_target_properties(paqu_UDF PROPERTIES PREFIX "")
+set_target_properties(mysql_aip_UDF PROPERTIES PREFIX "")
 
-INSTALL(TARGETS paqu_UDF DESTINATION "${MYSQL_PLUGIN_DIR}")
+INSTALL(TARGETS mysql_aip_UDF DESTINATION "${MYSQL_PLUGIN_DIR}")
 
 message("\nFURTHER INSTALLATION INSTRUCTIONS")
 message("---------------------------------\n")
