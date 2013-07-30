@@ -79,7 +79,11 @@ long long idle( UDF_INIT* initid, UDF_ARGS* args, char* is_null, char* is_error 
 
     for(i=0; i < sleepValue; i++) {
 
+#if defined(MARIADB_BASE_VERSION) && MYSQL_VERSION_ID >= 50500
+        if(thd->killed != NOT_KILLED)
+#else
         if(thd->killed != THD::NOT_KILLED)
+#endif
             break;
 
         sleep(1);
