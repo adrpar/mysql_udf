@@ -85,7 +85,7 @@ my_bool hilbertKey_init(UDF_INIT* initid, UDF_ARGS* args, char* message) {
 			return 1;
 	    }
 
-	    if(*(double*)args->args[3+i] < 0.0) {
+	    if(args->args[3+i] != NULL && *(double*)args->args[3+i] < 0.0) {
 			strcpy(message, "hilbertKey() coordinates need to be positive numbers");
 			return 1;
 	    }

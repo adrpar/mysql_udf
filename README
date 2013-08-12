@@ -35,7 +35,7 @@ To install
 7) make install
 
 8) log into mysql server as root and execute the commands in 
-   install_paquUDF.sql
+   install_udfs.sql
 
    This will setup the neccessary tables, install the plugin
    and create all the UDFs needed to administer the queue.
