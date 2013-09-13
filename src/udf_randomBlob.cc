@@ -59,8 +59,8 @@ my_bool randomBlob_init( UDF_INIT* initid, UDF_ARGS* args, char* message ) {
     
     //no limits on number of decimals
     initid->maybe_null = 0;
-    initid->ptr = (char*)malloc(args->args[0]);
-    initid->max_length = args->args[0];
+    initid->ptr = (char*)malloc(*(long long*)args->args[0]);
+    initid->max_length = *(long long*)args->args[0];
     
     return 0;
 }
