@@ -11,11 +11,10 @@ set(MYSQL_PATH "/usr/local/mysql")
 ###########################################################
 set(MYSQL_SOURCES_PATH "/home/adrpar/Downloads/mysql-5.5.14-spider-2.28-vp-0.17-hs-1.1-q4m-0.95")
 
-
 ###########################################################
 #### uncomment this, if you compile for MariaDB 10.0
 ###########################################################
-set(MARIADB 1)
+#set(MARIADB 1)
 
 if(MYSQL_PATH)
     set(MYSQL_CONFIG "${MYSQL_PATH}/bin/mysql_config")
