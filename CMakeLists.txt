@@ -11,6 +11,12 @@ set(MYSQL_PATH "/usr/local/mysql")
 ###########################################################
 set(MYSQL_SOURCES_PATH "/home/adrpar/Downloads/mysql-5.5.14-spider-2.28-vp-0.17-hs-1.1-q4m-0.95")
 
+
+###########################################################
+#### uncomment this, if you compile for MariaDB 10.0
+###########################################################
+set(MARIADB 1)
+
 if(MYSQL_PATH)
     set(MYSQL_CONFIG "${MYSQL_PATH}/bin/mysql_config")
 else()
@@ -28,6 +34,39 @@ STRING(REGEX REPLACE "\n" "" MYSQL_PLUGIN_DIR ${MYSQL_PLUGIN_DIR})
 set(CMAKE_BUILD_TYPE Debug)
 SET(BUILD_SHARED_LIBS ON)
 
+#read define parameters with which mysql has been compiled. for this we parse mysqlbug
+file(READ ${MYSQL_PATH}/bin/mysqlbug mysqlbugContent)
+STRING(REGEX REPLACE ".*COMP_RUN_INFO=.*CXXFLAGS='([^']*).*" "\\1" mysqlConfig ${mysqlbugContent})
+STRING(REGEX MATCHALL "-D([^ ]*)" defineList "${mysqlConfig}")
+message("Found the following defines in your mysqld configuration: ${defineList}")
+
+add_definitions(${defineList})
+
+#PCRE configuration taken from MariaDB 10 source
+if(MARIADB)
+	file(STRINGS ${MYSQL_SOURCES_PATH}/pcre/configure.ac
+	  configure_lines
+	  LIMIT_COUNT 50 # Read only the first 50 lines of the file
+	)
+
+	set(SEARCHED_VARIABLES "pcre_major" "pcre_minor" "pcre_prerelease" "pcre_date")
+	foreach(configure_line ${configure_lines})
+	    foreach(_substitution_variable ${SEARCHED_VARIABLES})
+	        string(TOUPPER ${_substitution_variable} _substitution_variable_upper)
+	        if (NOT ${_substitution_variable_upper})
+	            string(REGEX MATCH "m4_define\\(${_substitution_variable}, \\[(.*)\\]" MACTHED_STRING ${configure_line})
+	            if (CMAKE_MATCH_1)
+	                set(${_substitution_variable_upper} ${CMAKE_MATCH_1})
+	            endif()
+	        endif()
+	    endforeach()
+	endforeach()
+
+	CONFIGURE_FILE(${MYSQL_SOURCES_PATH}/pcre/pcre.h.in
+	               ${PROJECT_BINARY_DIR}/pcre.h
+	               @ONLY)
+endif()
+
 add_definitions(-DMYSQL_DYNAMIC_PLUGIN)
 add_definitions(-DDBUG_OFF)
 add_definitions(-DDISABLE_DTRACE)
@@ -35,7 +74,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
 #add_definitions(-D__QQUEUE_DEBUG__)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MYSQL_INCLUDE_DIR} -fPIC -fno-exceptions -fno-rtti")
 
-include_directories ("${PROJECT_SOURCE_DIR}" "${MYSQL_SOURCES_PATH}/include" "${MYSQL_SOURCES_PATH}/mysys" "${MYSQL_SOURCES_PATH}/regex" "${MYSQL_SOURCES_PATH}/sql" "${MYSQL_SOURCES_PATH}")
+include_directories ("${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}" "${MYSQL_SOURCES_PATH}/include" "${MYSQL_SOURCES_PATH}/mysys" "${MYSQL_SOURCES_PATH}/regex" "${MYSQL_SOURCES_PATH}/sql" "${MYSQL_SOURCES_PATH}")
 
 file(GLOB FILES_SRC "${PROJECT_SOURCE_DIR}/src/*.h" "${PROJECT_SOURCE_DIR}/src/*.cpp" "${PROJECT_SOURCE_DIR}/src/*.cc" "${PROJECT_SOURCE_DIR}/src/libhilbert/*.c")
 

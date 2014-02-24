@@ -29,6 +29,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <mysql_version.h>
 #include <mysql.h>
 #include <sql_class.h>
 
