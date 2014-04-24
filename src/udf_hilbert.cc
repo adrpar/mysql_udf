@@ -52,7 +52,7 @@ my_bool hilbertKey_init(UDF_INIT* initid, UDF_ARGS* args, char* message) {
 		return 1;
     }
 
-    if(*(long long*)args->args[0] < 0) {
+    if(args->args[0] != NULL && *(long long*)args->args[0] < 0) {
         strcpy(message, "hilbertKey() requires the hilbert order to be non negative");
         return 1;
     }
@@ -67,30 +67,31 @@ my_bool hilbertKey_init(UDF_INIT* initid, UDF_ARGS* args, char* message) {
 		return 1;
     }
 
-    if(*(long long*)args->args[2] < 0) {
+    if(args->args[2] != NULL && *(long long*)args->args[2] < 0) {
         strcpy(message, "hilbertKey() requires the dimension to be non negative");
         return 1;
     }
 
     //loop through all the coordinates and check those
-    if(args->arg_count != 3 + *(long long*)args->args[2]) {
+    if(args->args[2] != NULL && args->arg_count != 3 + *(long long*)args->args[2]) {
 		strcpy(message, "wrong number of arguments: hilbertKey() did not reveive enough coordinates to match the dimension");
 		return 1;
     }
 
     int i=0;
-    for(i=0; i<*(long long*)args->args[2]; i++) {
-	    if(args->arg_type[3+i] != REAL_RESULT && args->arg_type[3+i] != DECIMAL_RESULT) {
-			strcpy(message, "hilbertKey() coordinates need to be real numbers");
-			return 1;
-	    }
+    if(args->args[2] != NULL) {
+        for(i=0; i<*(long long*)args->args[2]; i++) {
+            if(args->arg_type[3+i] != REAL_RESULT && args->arg_type[3+i] != DECIMAL_RESULT) {
+                strcpy(message, "hilbertKey() coordinates need to be real numbers");
+                return 1;
+            }
 
-	    if(args->args[3+i] != NULL && *(double*)args->args[3+i] < 0.0) {
-			strcpy(message, "hilbertKey() coordinates need to be positive numbers");
-			return 1;
-	    }
+            if(args->args[3+i] != NULL && *(double*)args->args[3+i] < 0.0) {
+                strcpy(message, "hilbertKey() coordinates need to be positive numbers");
+                return 1;
+            }
+        }
     }
-
 
     //no limits on number of decimals
     initid->decimals = 31;
@@ -154,7 +155,7 @@ my_bool coordFromHilbertKey_init(UDF_INIT* initid, UDF_ARGS* args, char* message
 		return 1;
     }
 
-    if(*(long long*)args->args[0] < 0) {
+    if(args->args[0] != NULL && *(long long*)args->args[0] < 0) {
         strcpy(message, "coordFromHilbertKey() requires the hilbert order to be non negative");
         return 1;
     }
@@ -169,7 +170,7 @@ my_bool coordFromHilbertKey_init(UDF_INIT* initid, UDF_ARGS* args, char* message
 		return 1;
     }
 
-    if(*(long long*)args->args[2] < 0) {
+    if(args->args[2] != NULL && *(long long*)args->args[2] < 0) {
         strcpy(message, "coordFromHilbertKey() requires the dimension to be non negative");
         return 1;
     }
@@ -179,7 +180,7 @@ my_bool coordFromHilbertKey_init(UDF_INIT* initid, UDF_ARGS* args, char* message
 		return 1;
     }
 
-    if(*(long long*)args->args[3] < 0) {
+    if(args->args[3] != NULL && *(long long*)args->args[3] < 0) {
         strcpy(message, "coordFromHilbertKey() requires the hilbert key to be non negative");
         return 1;
     }
@@ -189,12 +190,12 @@ my_bool coordFromHilbertKey_init(UDF_INIT* initid, UDF_ARGS* args, char* message
 		return 1;
     }
 
-    if(*(long long*)args->args[4] < 0) {
+    if(args->args[4] != NULL && *(long long*)args->args[4] < 0) {
         strcpy(message, "coordFromHilbertKey() requires the current dimension to be non negative");
         return 1;
     }
 
-    if(*(long long*)args->args[4] >= *(long long*)args->args[2]) {
+    if(args->args[4] != NULL && args->args[2] != NULL && *(long long*)args->args[4] >= *(long long*)args->args[2]) {
         strcpy(message, "coordFromHilbertKey() requires the current dimension to start at 0 and not exceed the dimension - 1");
         return 1;
     }

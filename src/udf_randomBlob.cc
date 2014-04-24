@@ -52,7 +52,7 @@ my_bool randomBlob_init( UDF_INIT* initid, UDF_ARGS* args, char* message ) {
     	return 1;
     }
 
-    if(*(long long*)args->args[0] < 0) {
+    if(args->args[0] != NULL && *(long long*)args->args[0] < 0) {
         strcpy(message, "randomBlob() requires parameter one to be non negative");
         return 1;
     }
