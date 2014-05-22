@@ -1,0 +1,7 @@
+"strrpos","Find position of the last occurrence of a given character in a string. strrpos(haystack, needle)"
+"idle","Do nothing for a given number of seconds. idle(num seconds)"
+"angdist","Calculate angular distance using the Vincenty formula. angdist(pointA RA (degree), pointA DEC (degree), pointB RA (degree), pointB DEC (degree))"
+"hilbertKey","Calculate the Hilbert key of an up to 10 dimensional Hilbert curve. hilbertKey(hilbert order, box size, num dim, x, y, z, ... )"
+"coordFromHilbertKey","Given a Hilbert key, calculate the i-th Eulerian coordinate. coordFromHilbertKey(hilbert order, box size, num dim, hilbert key, current dimension 'i' (separate call for each dimension))"
+"sum_of_squares","Calculate the sum of squares needed for the Welford 1962, Chan et al. 1979 algorithm for a distributed/partitioned one pass STDDEV calculation. sum_of_squares(number)"
+"partitadd_sum_of_sqares","Reduce the individual sum of squares from different partitions to calculate STDDEV according to the Welford 1962, Chan et al. 1979 algorithm. partitadd_sum_of_sqares(PART_M2, PART_MEAN, PART_COUNT)"

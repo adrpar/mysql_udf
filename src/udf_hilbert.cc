@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <mysql.h>
+#include <math.h>
 
 extern "C" {
 	#include "libhilbert/hilbertKey.h"
@@ -182,6 +183,11 @@ my_bool coordFromHilbertKey_init(UDF_INIT* initid, UDF_ARGS* args, char* message
 
     if(args->args[3] != NULL && *(long long*)args->args[3] < 0) {
         strcpy(message, "coordFromHilbertKey() requires the hilbert key to be non negative");
+        return 1;
+    }
+
+    if(args->args[3] != NULL && *(long long*)args->args[3] >= pow(2, *(long long*)args->args[0]) ) {
+        strcpy(message, "coordFromHilbertKey() given hilbert key larger than maximum allowed key pow(2, M)");
         return 1;
     }
 
