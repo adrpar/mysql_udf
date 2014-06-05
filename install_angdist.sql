@@ -1,0 +1,1 @@
+CREATE FUNCTION angdist RETURNS REAL SONAME 'mysql_aip_UDF.so';
