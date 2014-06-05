@@ -3,14 +3,16 @@ project (mysql_aip_UDF)
 ###########################################################
 #### uncomment this, if you want to specify own mysql path
 ###########################################################
-set(MYSQL_PATH "/usr/local/mysql")
-
+if(NOT MYSQL_PATH)
+    set(MYSQL_PATH "/usr/")
+endif()
 ###########################################################
 #### path to the mysql 5.5 sources - download them from
 #### www.mysql.com if you don't have them 
 ###########################################################
-set(MYSQL_SOURCES_PATH "/home/adrpar/Downloads/mysql-5.5.14-spider-2.28-vp-0.17-hs-1.1-q4m-0.95")
-
+if(NOT MYSQL_SOURCES_PATH)
+    set(MYSQL_SOURCES_PATH "/usr/src/mysql/mysql-5.5")
+endif()
 ###########################################################
 #### uncomment this, if you compile for MariaDB 10.0
 ###########################################################
