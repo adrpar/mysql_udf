@@ -1,0 +1,1 @@
+CREATE FUNCTION strrpos RETURNS INTEGER SONAME 'mysql_aip_UDF.so';

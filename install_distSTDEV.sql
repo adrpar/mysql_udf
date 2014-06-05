@@ -1,0 +1,2 @@
+CREATE AGGREGATE FUNCTION sum_of_squares RETURNS REAL SONAME 'mysql_aip_UDF.so';
+CREATE AGGREGATE FUNCTION partitAdd_sum_of_squares RETURNS REAL SONAME 'mysql_aip_UDF.so';
