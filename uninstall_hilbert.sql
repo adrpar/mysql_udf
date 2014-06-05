@@ -1,4 +1,4 @@
-DROP FUNCTION hilbertKey;
-DROP FUNCTION coordFromHilbertKey;
+DROP FUNCTION IF EXISTS hilbertKey;
+DROP FUNCTION IF EXISTS coordFromHilbertKey;
 
-drop procedure coordinatesFromHilbertKey;
+DROP PROCEDURE IF EXISTS coordinatesFromHilbertKey;

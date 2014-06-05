@@ -1,1 +1,1 @@
-DROP FUNCTION strrpos;
+DROP FUNCTION IF EXISTS strrpos;

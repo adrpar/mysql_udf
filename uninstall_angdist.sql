@@ -1,1 +1,1 @@
-DROP FUNCTION angdist;
+DROP FUNCTION IF EXISTS angdist;
